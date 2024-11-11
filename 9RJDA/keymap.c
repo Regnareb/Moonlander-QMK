@@ -1,13 +1,14 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "i18n.h"
+#include "features/select_word.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
+  SELECTWORD = SAFE_RANGE,
 };
-
 
 
 enum tap_dance_codes {
@@ -46,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_SPACE,       KC_ENTER,       KC_LEFT_CTRL,                   TD(DANCE_22),   TD(DANCE_23),   KC_LEFT_CTRL
   ),
   [1] = LAYOUT_moonlander(
-    KC_NO,          US_SUP1,        US_SUP2,        US_SUP3,        KC_NO,          KC_NO,          US_TILD,                                        KC_INSERT,      KC_NO,          KC_NO,          KC_DELETE,      KC_KP_ASTERISK, KC_KP_SLASH,    KC_KP_MINUS,    
+    SELECTWORD,          US_SUP1,        US_SUP2,        US_SUP3,        KC_NO,          KC_NO,          US_TILD,                                        KC_INSERT,      KC_NO,          KC_NO,          KC_DELETE,      KC_KP_ASTERISK, KC_KP_SLASH,    KC_KP_MINUS,    
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_PLUS,     
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRANSPARENT,                                                                 KC_NO,          KC_NO,          KC_NO,          KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_PLUS,     
     KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_MEDIA_PLAY_PAUSE,                                KC_NO,          KC_NO,          KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_ENTER,    
@@ -128,6 +129,8 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_select_word(keycode, record, SELECTWORD)) { return false; }
+
   switch (keycode) {
 
     case RGB_SLD:
