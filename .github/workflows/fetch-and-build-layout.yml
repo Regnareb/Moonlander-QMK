@@ -10,7 +10,7 @@ on:
       layout_geometry:
         description: "voyager|moonlander|ergodox_ez"
         required: true
-        default: "voyager"
+        default: "moonlander"
 
 permissions:
   contents: write
