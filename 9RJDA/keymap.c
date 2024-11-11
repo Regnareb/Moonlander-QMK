@@ -47,12 +47,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_SPACE,       KC_ENTER,       KC_LEFT_CTRL,                   TD(DANCE_22),   TD(DANCE_23),   KC_LEFT_CTRL
   ),
   [1] = LAYOUT_moonlander(
-    SELECTWORD,          US_SUP1,        US_SUP2,        US_SUP3,        KC_NO,          KC_NO,          US_TILD,                                        KC_INSERT,      KC_NO,          KC_NO,          KC_DELETE,      KC_KP_ASTERISK, KC_KP_SLASH,    KC_KP_MINUS,    
+    KC_NO,          US_SUP1,        US_SUP2,        US_SUP3,        KC_NO,          KC_NO,          US_TILD,                                        KC_INSERT,      KC_NO,          KC_NO,          KC_DELETE,      KC_KP_ASTERISK, KC_KP_SLASH,    KC_KP_MINUS,    
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_PLUS,     
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRANSPARENT,                                                                 KC_NO,          KC_NO,          KC_NO,          KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_PLUS,     
     KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_MEDIA_PLAY_PAUSE,                                KC_NO,          KC_NO,          KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_ENTER,    
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                                 TO(2),          KC_NO,          KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_ENTER,    
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,                          KC_NO,          KC_NO,          KC_NO
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, SELECTWORD,                                                                                                 TO(2),          KC_NO,          KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_ENTER,    
+    KC_MEDIA_PLAY_PAUSE, KC_TRANSPARENT, KC_NO,                          KC_NO,          KC_NO,          KC_NO
   ),
   [2] = LAYOUT_moonlander(
     QK_BOOT,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MU_TOGG,        
@@ -419,8 +419,8 @@ void dance_6_finished(tap_dance_state_t *state, void *user_data) {
     switch (dance_state[6].step) {
         case SINGLE_TAP: register_code16(LALT(LCTL(KC_QUOTE))); break;
         case SINGLE_HOLD: register_code16(LALT(LCTL(KC_GRAVE))); break;
-        case DOUBLE_TAP: register_code16(RALT(RCTL(US_COLN))); break;
-        case DOUBLE_HOLD: register_code16(LALT(LCTL(US_COLN))); break;
+        case DOUBLE_TAP: register_code16(RALT(RCTL(KC_6))); break;
+        case DOUBLE_HOLD: register_code16(LALT(LCTL(KC_SCLN))); break;
         case DOUBLE_SINGLE_TAP: tap_code16(LALT(LCTL(KC_QUOTE))); register_code16(LALT(LCTL(KC_QUOTE)));
     }
 }
