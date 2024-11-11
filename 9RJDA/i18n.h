@@ -1,7 +1,5 @@
 #define US_DEG S(ALGR(KC_SCLN))
 #define US_TILD S(KC_GRV)
-#define US_COLN S(KC_SCLN)
-#define US_CIRC S(KC_6)
 #define US_SUP1 S(ALGR(KC_1))
 #define US_SUP2 ALGR(KC_2)
 #define US_SUP3 ALGR(KC_3)
