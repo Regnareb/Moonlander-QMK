@@ -59,6 +59,13 @@ jobs:
           git merge -Xignore-all-space oryx
           git push
 
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@3.0.5
+        with:
+          find: "KC_APPLICATION"
+          replace: "SELECTWORD"
+          include: "**keymap.c" # Will match all README.md files in any nested directory
+
       - name: Checkout the right firmware branch
         run: |
           cd qmk_firmware
