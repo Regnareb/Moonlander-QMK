@@ -2,12 +2,21 @@
 #include "version.h"
 #include "i18n.h"
 #include "features/select_word.h"
+#include "features/socd_cleaner.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
 
+// https://getreuer.info/posts/keyboards/socd-cleaner/index.html
+socd_cleaner_t socd_h = {{KC_A, KC_D}, SOCD_CLEANER_LAST};
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//   socd_cleaner_enabled = IS_LAYER_ON_STATE(state, GAME);
+//   return state;
+// }
+
+
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
-  SELECTWORD = SAFE_RANGE,
+  SELECTWORD = SAFE_RANGE, // https://getreuer.info/posts/keyboards/select-word/index.html
 };
 
 
@@ -128,6 +137,8 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_socd_cleaner(keycode, record, &socd_v)) { return false; }
+  if (!process_socd_cleaner(keycode, record, &socd_h)) { return false; }
   if (!process_select_word(keycode, record, SELECTWORD)) { return false; }
 
   switch (keycode) {
