@@ -9,12 +9,14 @@
 // https://getreuer.info/posts/keyboards/socd-cleaner/index.html
 socd_cleaner_t socd_h = {{KC_A, KC_D}, SOCD_CLEANER_LAST};
 layer_state_t layer_state_set_user(layer_state_t state) {
-  socd_cleaner_enabled = IS_LAYER_ON_STATE(state, "GAME");
+//   socd_cleaner_enabled = IS_LAYER_ON_STATE(state, 1);
   switch (get_highest_layer(state)) {
-    case "GAME":
+    case 1:
+      socd_cleaner_enabled = true;
       autoshift_disable();
       break;
     default:
+      socd_cleaner_enabled = false;
       autoshift_enable();
       break;
   }
