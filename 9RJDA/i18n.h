@@ -5,6 +5,5 @@
 #define US_SUP1 S(ALGR(KC_1))
 #define US_SUP2 ALGR(KC_2)
 #define US_SUP3 ALGR(KC_3)
-#define US_HALF ALGR(KC_7)
 #define US_TQTR ALGR(KC_8)
 #define US_QRTR ALGR(KC_6)
