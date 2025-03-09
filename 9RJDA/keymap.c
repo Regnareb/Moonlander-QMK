@@ -152,6 +152,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   switch (keycode) {
 
+    case SELECTWORD:  // Backward word selection.
+      if (record->event.pressed) {
+        select_word_register('B');
+      } else {
+        select_word_unregister();
+      }
+      break;
+
+
     case RGB_SLD:
         if (rawhid_state.rgb_control) {
             return false;
