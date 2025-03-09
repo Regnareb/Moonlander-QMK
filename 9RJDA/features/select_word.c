@@ -154,18 +154,38 @@ static void select_line(void) {
   // Shift+Down.
   reset_before_next_event = false;
   const uint8_t saved_mods = get_mods();
+  const bool ctrled = MOD_MASK_CTRL & (get_mods() | get_weak_mods()
+#ifndef NO_ACTION_ONESHOT
+       | get_oneshot_mods()
+#endif  // NO_ACTION_ONESHOT
+      );
   clear_all_mods();
 
-  if (selection_dir != 2) {
-    send_keyboard_report();
-    send_string_with_delay_P(
-        IS_MAC ? PSTR(SS_LGUI(SS_TAP(X_LEFT) SS_LSFT(SS_TAP(X_RGHT))))
-               : PSTR(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END))),
-        TAP_CODE_DELAY);
-  } else {
-    register_mods(MOD_BIT_LSHIFT);
-    registered_hotkey = KC_DOWN;
-    register_code(KC_DOWN);
+  if (ctrled) {
+    if (selection_dir != 2) {
+      send_keyboard_report();
+      send_string_with_delay_P(
+          IS_MAC ? PSTR(SS_LGUI(SS_TAP(X_LEFT) SS_LSFT(SS_TAP(X_RGHT))))
+                : PSTR(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END))),
+          TAP_CODE_DELAY);
+    } else {
+      register_mods(MOD_BIT_LSHIFT);
+      registered_hotkey = KC_DOWN;
+      register_code(KC_DOWN);
+    }
+  }
+  else {
+    if (selection_dir != 2) {
+      send_keyboard_report();
+      send_string_with_delay_P(
+          IS_MAC ? PSTR(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))))
+                : PSTR(SS_TAP(X_END) SS_LSFT(SS_TAP(X_HOME))),
+          TAP_CODE_DELAY);
+    } else {
+      register_mods(MOD_BIT_LSHIFT);
+      registered_hotkey = KC_UP;
+      register_code(KC_UP);
+    }
   }
 
   set_mods(saved_mods);
