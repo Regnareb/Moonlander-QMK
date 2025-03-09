@@ -251,18 +251,18 @@ bool process_select_word(uint16_t keycode, keyrecord_t* record) {
        | get_oneshot_mods()
 #endif  // NO_ACTION_ONESHOT
       );
-    const bool alted = MOD_MASK_ALT & (get_mods() | get_weak_mods()
+    const bool ctrled = MOD_MASK_CTRL & (get_mods() | get_weak_mods()
 #ifndef NO_ACTION_ONESHOT
        | get_oneshot_mods()
 #endif  // NO_ACTION_ONESHOT
       );
-      
+
 
     if (record->event.pressed) {
       if (shifted) {
         select_word_register('L');
       }
-      else if (alted) {
+      else if (ctrled) {
         select_word_register('W');
       }
       else {
