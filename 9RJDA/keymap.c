@@ -29,6 +29,8 @@ enum custom_keycodes {
   SELECTWORD = SAFE_RANGE, // https://getreuer.info/posts/keyboards/select-word/index.html
 };
 
+uint16_t SELECT_WORD_KEYCODE = SELECTWORD;
+
 
 enum tap_dance_codes {
   DANCE_0,
@@ -146,7 +148,7 @@ bool rgb_matrix_indicators_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_socd_cleaner(keycode, record, &socd_h)) { return false; }
-  if (!process_select_word(keycode, record, SELECTWORD)) { return false; }
+  if (!process_select_word(keycode, record)) { return false; }
 
   switch (keycode) {
 
