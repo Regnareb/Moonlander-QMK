@@ -246,14 +246,23 @@ bool process_select_word(uint16_t keycode, keyrecord_t* record) {
 #endif  // SELECT_WORD_TIMEOUT > 0
 
   if (SELECT_WORD_KEYCODE && keycode == SELECT_WORD_KEYCODE) {
-    const bool shifted = MOD_MASK_SHIFT & (get_mods() | get_weak_mods()
+    const bool shifted = MOD_MASK_SHIFT & (get_mods() | get_weak_mods();
+    const bool alted = MOD_MASK_ALT & (get_mods() | get_weak_mods();
 #ifndef NO_ACTION_ONESHOT
        | get_oneshot_mods()
 #endif  // NO_ACTION_ONESHOT
       );
 
     if (record->event.pressed) {
-      select_word_register(shifted ? 'L' : 'W');
+      if (shifted) {
+        select_word_register('L');
+      }
+      else if (alted) {
+        select_word_register('W');
+      }
+      else {
+        select_word_register('B');
+      }
     } else {
       select_word_unregister();
     }
