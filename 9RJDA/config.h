@@ -1,8 +1,3 @@
-/*
-  Set any config.h overrides for your specific keymap here.
-  See config.h options at https://docs.qmk.fm/#/config_options?id=the-configh-file
-*/
-
 #undef RGB_MATRIX_TIMEOUT
 #define RGB_MATRIX_TIMEOUT 420000
 
@@ -11,7 +6,7 @@
 #define MOUSEKEY_TIME_TO_MAX 35
 
 #define NO_AUTO_SHIFT_TAB
-#define SERIAL_NUMBER "9RJDA/Dz4wAP"
+#define SERIAL_NUMBER "9RJDA/wOOgxD"
 #define LAYER_STATE_8BIT
 
 #define RGB_MATRIX_STARTUP_SPD 60
