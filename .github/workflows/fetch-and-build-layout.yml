@@ -35,7 +35,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v5
         with:
-          ref: oryx
+          ref: ''
 
       - name: Download the full history for the merge to work correctly
         run: git pull --unshallow
@@ -181,6 +181,8 @@ jobs:
           # Copy layout files to the qmk folder
           rm -rf ${keyboard_directory}/${{ github.event.inputs.layout_geometry }}/keymaps/${{ github.event.inputs.layout_id }}
           mkdir -p ${keyboard_directory}/${{ github.event.inputs.layout_geometry }}/keymaps && cp -r ${{ github.event.inputs.layout_id }} "$_"
+          cp -r modules/ qmk_firmware
+          # ls -l qmk_firmware/modules
           
           # Build the layout
           docker run -v ./qmk_firmware:/root --rm qmk /bin/sh -c "
