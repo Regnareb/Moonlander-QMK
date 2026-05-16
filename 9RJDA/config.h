@@ -1,5 +1,5 @@
 #undef DEBOUNCE
-#define DEBOUNCE 2
+#define DEBOUNCE 3
 
 #undef RGB_MATRIX_TIMEOUT
 #define RGB_MATRIX_TIMEOUT 300000
@@ -9,7 +9,7 @@
 #define MOUSEKEY_TIME_TO_MAX 35
 
 #define NO_AUTO_SHIFT_TAB
-#define SERIAL_NUMBER "9RJDA/LvmMbX"
+#define SERIAL_NUMBER "9RJDA/gaLnQX"
 #define LAYER_STATE_8BIT
 #define COMBO_COUNT 1
 
