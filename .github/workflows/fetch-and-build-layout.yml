@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       layout_id:
-        description: "Layout id available in URL https://configure.zsa.io/voyager/layouts/[ID_IS_HERE]/latest"
+        description: "Layout id available in URL https://configure.zsa.io/voyager/layouts/9RJDA/latest"
         required: true
-        default: "g7jjw"
+        default: "9RJDA"
       layout_geometry:
         description: "Keyboard type"
         type: choice
@@ -22,7 +22,7 @@ on:
           - ergodox_ez/stm32/shine
           - planck_ez
           - planck_ez/glow
-        default: voyager
+        default: moonlander/reva
 
 permissions:
   contents: write
@@ -71,12 +71,86 @@ jobs:
           printf "✨(oryx): %s\n" "$CHANGE_DESCRIPTION" | git commit -F - || echo "No layout change"
           git push
 
-      - name: Merge Oryx with custom QMK
-        run: |
-          git fetch origin main
-          git checkout -B main origin/main
-          git merge -Xignore-all-space oryx
-          git push
+      # - name: Merge Oryx with custom QMK
+      #   run: |
+      #     git fetch origin main
+      #     git checkout -B main origin/main
+      #     git merge -Xignore-all-space oryx
+      #     git push
+
+
+
+
+
+
+
+          
+      - name: Add layers features
+        uses: htsnvhoang/find-replace-multiple@master
+        with:
+          finds: "  enum custom_keycodes {"
+          replaces: |
+            // https://getreuer.info/posts/keyboards/socd-cleaner/index.html
+            socd_cleaner_t socd_opposing_pairs[] = {
+              {{KC_A, KC_D}, SOCD_CLEANER_LAST},
+            };
+            layer_state_t layer_state_set_user(layer_state_t state) {
+            //   socd_cleaner_enabled = IS_LAYER_ON_STATE(state, 1);
+              switch (get_highest_layer(state)) {
+                case 1:
+                  socd_cleaner_enabled = true;
+                  autoshift_disable();
+                  break;
+                default:
+                  socd_cleaner_enabled = false;
+                  autoshift_enable();
+                  break;
+              }
+              return state;
+            }
+            
+            enum custom_keycodes {
+          include: "./9RJDA/keymap.c"  
+          separator: "~"
+            
+      # - name: Replace Keys
+      #   uses: htsnvhoang/find-replace-multiple@master
+      #   with:
+      #     finds: |
+      #       F14,
+      #       F15,
+      #       F16,
+      #       F17
+      #     replaces: |
+      #       SELECT_WORD,
+      #       SELECT_LINE_UP,
+      #       US_OE,
+      #       ALGR(KC_K)
+      #     include: "9RJDA/**"
+          
+      - name: Add QMK modules
+        uses: jacobtomlinson/gha-find-replace@3.0.5
+        with:
+          find: "\"zsa/defaults\""
+          replace: |
+            "zsa/defaults",
+            "getreuer/select_word",
+            "getreuer/socd_cleaner"
+          include: "9RJDA/keymap.json"
+
+      # - name: Commit and Push changes DEBUG
+      #   env:
+      #     CHANGE_DESCRIPTION: ${{ steps.download-layout-source.outputs.change_description }}
+      #   run: |
+      #     git config --local user.name "github-actions"
+      #     git config --local user.email "github-actions@github.com"
+      #     git add .
+      #     printf "✨(oryx after mods): %s\n" "$CHANGE_DESCRIPTION" | git commit -F - || echo "No layout change"
+      #     git push
+
+
+
+
 
       - name: Update QMK firmware submodule to latest version (${{ steps.download-layout-source.outputs.firmware_version }})
         run: |
